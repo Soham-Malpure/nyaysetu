@@ -3,1839 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYAYSETU - Expert Legal Aid for Your Rights</title>
+    <title>Secure Login | LawConnect</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Georgia', serif;
         }
-
-        :root {
-            --primary-blue: #1e3c72;
-            --secondary-blue: #2a5298;
-            --accent-gold: #ffd700;
-            --accent-gold-light: #ffed4a;
-            --text-dark: #2c3e50;
-            --text-light: #6c757d;
-            --bg-light: #f8f9fa;
-            --white: #ffffff;
-            --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
-            --shadow-medium: 0 5px 20px rgba(0,0,0,0.1);
-            --shadow-heavy: 0 10px 30px rgba(0,0,0,0.2);
-            --border-radius: 12px;
-            --border-radius-large: 20px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.7;
-            color: var(--text-dark);
-            background-color: var(--white);
-            overflow-x: hidden;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
         }
-
-        html {
-            scroll-behavior: smooth;
+        
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
         }
-
-        /* Loading Screen */
-        .loading-overlay {
-            position: fixed;
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease;
+            height: 5px;
+            background: linear-gradient(to right, #1a3c6e, #2c5aa0);
         }
-
-        .loading-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
         }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid var(--accent-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        /* Language Switcher */
-        .language-switcher {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border-radius: 50px;
-            box-shadow: var(--shadow-medium);
-            backdrop-filter: blur(10px);
-        }
-
-        .lang-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: var(--white);
-            color: var(--primary-blue);
+        
+        .logo h1 {
+            color: #1a3c6e;
+            font-size: 28px;
             font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
+            letter-spacing: 1px;
+        }
+        
+        .logo p {
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin: 25px 0;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .checkbox-group label {
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: normal;
+        }
+        
+        .privacy-assurance {
+            background-color: #f0f7ff;
+            border-left: 4px solid #2c5aa0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .privacy-assurance h3 {
+            color: #1a3c6e;
+            font-size: 16px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-light);
         }
-
-        .lang-btn:hover {
-            transform: scale(1.1);
+        
+        .privacy-assurance h3::before {
+            content: '🔒';
+            margin-right: 8px;
         }
-
-        .lang-btn.active {
-            background: var(--primary-blue);
-            color: var(--white);
+        
+        .privacy-assurance p {
+            font-size: 14px;
+            color: #495057;
+            line-height: 1.5;
         }
-
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+        
+        .btn-login {
+            background: linear-gradient(to right, #1a3c6e, #2c5aa0);
             color: white;
             border: none;
-            border-radius: 50%;
-            font-size: 1.2rem;
+            border-radius: 5px;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
+            width: 100%;
+            transition: all 0.3s;
         }
-
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
+        
+        .btn-login:hover {
+            background: linear-gradient(to right, #15325c, #1f4a87);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-login:active {
             transform: translateY(0);
         }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
-        }
-
-        /* Header Styles */
-        header {
-            background: rgba(30, 60, 114, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        .header-scrolled {
-            background: rgba(30, 60, 114, 0.98);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
+        
+        .links {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
+            margin-top: 20px;
+            font-size: 14px;
         }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        .nav-menu li a {
-            color: rgba(255, 255, 255, 0.9);
+        
+        .links a {
+            color: #2c5aa0;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            position: relative;
-            padding: 0.5rem 0;
-            transition: var(--transition);
+            transition: color 0.2s;
         }
-
-        .nav-menu li a:hover {
-            color: var(--accent-gold);
+        
+        .links a:hover {
+            color: #1a3c6e;
+            text-decoration: underline;
         }
-
-        .nav-menu li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-gold);
-            transition: width 0.3s ease;
-        }
-
-        .nav-menu li a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            min-height: 44px;
-            min-width: 44px;
-        }
-
-        /* Mobile Menu */
-        .mobile-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 280px;
-            height: 100vh;
-            background: var(--primary-blue);
-            transition: right 0.3s ease;
-            z-index: 1001;
-            padding: 2rem;
-        }
-
-        .mobile-menu.open {
-            right: 0;
-        }
-
-        .mobile-menu-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        .mobile-nav-menu {
-            list-style: none;
-            padding-top: 4rem;
-        }
-
-        .mobile-nav-menu li {
-            margin-bottom: 2rem;
-        }
-
-        .mobile-nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            display: block;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, 
-                rgba(30, 60, 114, 0.9) 0%, 
-                rgba(42, 82, 152, 0.8) 50%, 
-                rgba(30, 60, 114, 0.9) 100%),
-                radial-gradient(circle at 30% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                linear-gradient(45deg, #f0f8ff 0%, #e6f3ff 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .footer {
             text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,215,0,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,215,0,0.15)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,215,0,0.1)"/></svg>') repeat;
-            animation: float 20s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        .hero-content {
-            max-width: 800px;
-            z-index: 2;
-            position: relative;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
-            background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-content p {
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
-            margin-bottom: 2.5rem;
-            opacity: 0.95;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
-            color: var(--text-dark);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Stats Section */
-        .stats {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            padding: 6rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="rgba(255,215,0,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,215,0,0.15)"/></svg>') repeat;
-            opacity: 0.6;
-        }
-
-        .stats-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .stats-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .stats-header h2 {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            color: white;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .stats-header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 3rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius-large);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-light));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-        }
-
-        .stat-item:hover::before {
-            transform: scaleX(1);
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            color: var(--text-dark);
-            transition: var(--transition);
-        }
-
-        .stat-item:hover .stat-icon {
-            transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 0.5rem;
-            display: block;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            line-height: 1;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 600;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .stat-number.animate {
-            animation: pulse 0.6s ease-in-out;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 6rem 0;
-            background: var(--bg-light);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 1rem;
-            color: var(--primary-blue);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 4rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--border-radius-large);
-            box-shadow: var(--shadow-light);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-heavy);
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            color: white;
-            transition: var(--transition);
-        }
-
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-blue);
-            font-weight: 700;
-        }
-
-        .service-card p {
-            color: var(--text-light);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .service-link {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .service-link:hover {
-            color: var(--secondary-blue);
-            transform: translateX(5px);
-        }
-
-        /* About Section */
-        .about {
-            padding: 6rem 0;
-            background: var(--white);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: var(--primary-blue);
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .about-text p {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .about-features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem;
-            background: var(--bg-light);
-            border-radius: var(--border-radius);
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .about-visual {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            height: 500px;
-            border-radius: var(--border-radius-large);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-visual::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 20h60v60H20z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/><path d="M30 30h40v40H30z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>') repeat;
-            opacity: 0.3;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 6rem 0;
-            background: var(--bg-light);
-        }
-
-        .testimonials-slider {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .testimonials-container {
-            display: flex;
-            transition: transform 0.5s ease;
-            overflow: hidden;
-        }
-
-        .testimonial-slide {
-            min-width: 100%;
-            display: flex;
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--border-radius-large);
-            box-shadow: var(--shadow-light);
-            transition: var(--transition);
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonial-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .testimonial-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-heavy);
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .author-info h4 {
-            color: var(--primary-blue);
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        .author-info p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .testimonials-nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 3rem;
-        }
-
-        .nav-btn {
-            width: 50px;
-            height: 50px;
-            background: var(--white);
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .nav-btn:hover {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .testimonials-dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            background: rgba(30, 60, 114, 0.3);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .dot.active {
-            background: var(--primary-blue);
-            transform: scale(1.2);
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 6rem 0;
-            background: var(--white);
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-info h3 {
-            font-size: 1.8rem;
-            color: var(--primary-blue);
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .contact-text h4 {
-            color: var(--primary-blue);
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-        }
-
-        .contact-text p {
-            color: var(--text-light);
-        }
-
-        .contact-form {
-            background: var(--bg-light);
-            padding: 2.5rem;
-            border-radius: var(--border-radius-large);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary-blue);
-            color: white;
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
-
-        .footer-about p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: var(--accent-gold);
-            color: var(--text-dark);
-            transform: translateY(-3px);
-        }
-
-        .footer-heading {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-gold);
-            padding-left: 5px;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        /* Fade-in Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .about-content,
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .testimonial-slide {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                padding: 0 1rem;
-            }
-
-            .hero-content {
-                padding: 0 1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .cta-button {
-                width: 100%;
-                justify-content: center;
-                min-height: 50px;
-            }
-
-            .about-features {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .stat-item {
-                padding: 2rem 1rem;
-            }
-
-            .stat-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-
-            .stat-number {
-                font-size: 2.5rem;
-            }
-
-            .stat-label {
-                font-size: 1rem;
-            }
-
-            .service-card {
-                padding: 2rem;
-            }
-        }
-
+            margin-top: 30px;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
         @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .login-container {
+                padding: 30px 20px;
+                margin: 20px;
             }
-
-            .services-grid {
-                grid-template-columns: 1fr;
+            
+            .links {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div style="text-align: center;">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">NYAYSETU</div>
+    <div class="login-container">
+        <div class="logo">
+            <h1>LawConnect</h1>
+            <p>Secure Client Portal</p>
         </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-overlay" id="mobileOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
-        <ul class="mobile-nav-menu">
-            <li><a href="#hero" data-key="nav.home">Home</a></li>
-            <li><a href="#about" data-key="nav.about">About</a></li>
-            <li><a href="#services" data-key="nav.services">Services</a></li>
-            <li><a href="#contact" data-key="nav.contact">Contact</a></li>
-        </ul>
-    </div>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop">↑</button>
-
-    <!-- Language Switcher -->
-    <div class="language-switcher">
-        <button class="lang-btn active" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="hi">HI</button>
-        <button class="lang-btn" data-lang="mr">MR</button>
-    </div>
-
-    <!-- Header -->
-    <header id="header">
-        <div class="header-container">
-            <div class="logo">NYAYSETU</div>
-            <ul class="nav-menu">
-                <li><a href="#hero" data-key="nav.home">Home</a></li>
-                <li><a href="#about" data-key="nav.about">About</a></li>
-                <li><a href="#services" data-key="nav.services">Services</a></li>
-                <li><a href="#contact" data-key="nav.contact">Contact</a></li>
-            </ul>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-content fade-in">
-            <h1 data-key="hero.title">Expert Legal Aid for Your Rights</h1>
-            <p data-key="hero.subtitle">Connecting you with experienced lawyers to protect your rights and provide justice through comprehensive legal support.</p>
-            <div class="cta-buttons">
-                <a href="https://nyaysetu-3e8f79.zapier.app/" class="cta-button" data-key="hero.cta.consult">Free Consultation</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2 class="section-title fade-in" data-key="services.title">Our Legal Services</h2>
-            <p class="section-subtitle fade-in" data-key="services.subtitle">Comprehensive legal solutions tailored to your specific needs and circumstances.</p>
-            
-            <div class="services-grid">
-                <div class="service-card fade-in">
-                    <div class="service-icon">⚖️</div>
-                    <h3 data-key="services.1.title">Civil Law</h3>
-                    <p data-key="services.1.desc">Professional representation in civil disputes including contract disagreements, property disputes, and personal injury claims.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="civil-law">Learn More →</a>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-icon">👨‍👩‍👧‍👦</div>
-                    <h3 data-key="services.2.title">Family Law</h3>
-                    <p data-key="services.2.desc">Compassionate assistance with divorce, child custody, alimony, and other family-related legal matters.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="family-law">Learn More →</a>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-icon">🏢</div>
-                    <h3 data-key="services.3.title">Corporate Law</h3>
-                    <p data-key="services.3.desc">Legal guidance for businesses including formation, contracts, compliance, and intellectual property protection.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="corporate-law">Learn More →</a>
-                </div>
-
-                <div class="service-card fade-in">
-                    <div class="service-icon">⚖️</div>
-                    <h3 data-key="services.4.title">Criminal Law</h3>
-                    <p data-key="services.4.desc">Defense against criminal charges including DUI, theft, assault, and more, protecting your legal rights.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="criminal-law">Learn More →</a>
-                </div>
-
-                <div class="service-card fade-in">
-                    <div class="service-icon">🤕</div>
-                    <h3 data-key="services.5.title">Personal Injury Law</h3>
-                    <p data-key="services.5.desc">Representation for victims of accidents, negligence, or workplace injuries seeking compensation.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="personal-injury-law">Learn More →</a>
-                </div>
-
-                <div class="service-card fade-in">
-                    <div class="service-icon">🏠</div>
-                    <h3 data-key="services.6.title">Real Estate Law</h3>
-                    <p data-key="services.6.desc">Assistance with property transactions, disputes, leases, zoning, and title issues.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="real-estate-law">Learn More →</a>
-                </div>
-
-                <div class="service-card fade-in">
-                    <div class="service-icon">💼</div>
-                    <h3 data-key="services.7.title">Employment Law</h3>
-                    <p data-key="services.7.desc">Protecting employee and employer rights in cases of discrimination, contracts, and workplace disputes.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="employment-law">Learn More →</a>
-                </div>
-
-                <div class="service-card fade-in">
-                    <div class="service-icon">✈️</div>
-                    <h3 data-key="services.8.title">Immigration Law</h3>
-                    <p data-key="services.8.desc">Guidance on visas, green cards, citizenship, deportation defense, and immigration appeals.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="immigration-law">Learn More →</a>
-                </div>
-
-                <div class="service-card fade-in">
-                    <div class="service-icon">💡</div>
-                    <h3 data-key="services.9.title">Intellectual Property Law</h3>
-                    <p data-key="services.9.desc">Securing and enforcing copyrights, trademarks, patents, and trade secrets for your creations.</p>
-                    <a href="#" class="service-link" data-key="services.link" data-service="intellectual-property-law">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text fade-in">
-                    <h2 data-key="about.title">Why Choose NYAYSETU?</h2>
-                    <p data-key="about.desc1"></p>
-                    <p data-key="about.desc2">We believe in making quality legal assistance accessible to everyone, ensuring that justice is never out of reach.</p>
-                    
-                    <div class="about-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span data-key="about.feature1">Unrestricted Access to Legal Help</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span data-key="about.feature2">Personalized Approach</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span data-key="about.feature3">Affordable Services</span>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span data-key="about.feature4">24/7 Support</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="about-visual fade-in">
-                    <div data-key="about.visual">Legal Excellence</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title fade-in" data-key="contact.title">Get In Touch</h2>
-            <p class="section-subtitle fade-in" data-key="contact.subtitle">Reach out to us for a consultation or any inquiries.</p>
-            
-            <div class="contact-grid">
-                <div class="contact-info fade-in">
-                    <h3 data-key="contact.info.title">Contact Information</h3>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div class="contact-text">
-                                <h4 data-key="contact.address.title">Address</h4>
-                                <p data-key="contact.address.value">Sant Tukaram Nagar, Pimpri, Pune, Maharashtra, India</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">📞</div>
-                            <div class="contact-text">
-                                <h4 data-key="contact.phone.title">Phone</h4>
-                                <p>+91 8208836121</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">✉️</div>
-                            <div class="contact-text">
-                                <h4 data-key="contact.email.title">Email</h4>
-                                <p>nyaysetu101@gmail.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="contact-form fade-in">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name" data-key="contact.form.name">Your Name</label>
-                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" data-key="contact.form.email">Email Address</label>
-                            <input type="email" id="email" class="form-control" placeholder="Email Address" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject" data-key="contact.form.subject">Subject</label>
-                            <input type="text" id="subject" class="form-control" placeholder="Subject" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" data-key="contact.form.message">Your Message</label>
-                            <textarea id="message" class="form-control" placeholder="Your Message" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn" data-key="contact.form.submit">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <div class="footer-logo">NYAYSETU</div>
-                    <p data-key="footer.desc">Providing expert legal assistance and connecting clients with experienced lawyers to protect their rights and ensure justice.</p>
-                    </div>               
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="your.email@example.com" required>
             </div>
             
-            <div class="copyright">
-                <p>&copy; NYAYSETU. <span data-key="footer.rights">All rights reserved.</span></p>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
             </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I have read and agree to the <a href="#" style="color: #2c5aa0;">Terms and Conditions</a> and <a href="#" style="color: #2c5aa0;">Privacy Policy</a></label>
+            </div>
+            
+            <div class="privacy-assurance">
+                <h3>Your Privacy is Protected</h3>
+                <p>We adhere to attorney-client privilege and employ industry-standard encryption. Your information will never be shared with third parties without your explicit consent.</p>
+            </div>
+            
+            <button type="submit" class="btn-login">Login to Your Account</button>
+            
+            <div class="links">
+                <a href="#">Forgot Password?</a>
+                <a href="#">Create New Account</a>
+            </div>
+        </form>
+        
+        <div class="footer">
+            <p>&copy; 2025  Nyaysetu. All rights reserved.</p>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // Language translations
-        const translations = {
-            en: {
-                "nav.home": "Home",
-                "nav.about": "About",
-                "nav.services": "Services",
-                "nav.contact": "Contact",
-                "hero.title": "Expert Legal Aid for Your Rights",
-                "hero.subtitle": "Connecting you with experienced lawyers to protect your rights and provide justice through comprehensive legal support.",
-                "hero.cta.consult": "Free Consultation",
-                "stats.title": "Our Achievement in Numbers",
-                "stats.subtitle": "Building trust through proven results and exceptional legal expertise",
-                "stats.clients": "Happy Clients",
-                "stats.lawyers": "Expert Lawyers",
-                "stats.years": "Years Experience",
-                "stats.success": "Case Success %",
-                "services.title": "Our Legal Services",
-                "services.subtitle": "Comprehensive legal solutions tailored to your specific needs and circumstances.",
-                "services.1.title": "Civil Law",
-                "services.1.desc": "Professional representation in civil disputes including contract disagreements, property disputes, and personal injury claims.",
-                "services.2.title": "Family Law",
-                "services.2.desc": "Compassionate assistance with divorce, child custody, alimony, and other family-related legal matters.",
-                "services.3.title": "Corporate Law",
-                "services.3.desc": "Legal guidance for businesses including formation, contracts, compliance, and intellectual property protection.",
-                "services.4.title": "Criminal Law",
-                "services.4.desc": "Defense against criminal charges including DUI, theft, assault, and more, protecting your legal rights.",
-                "services.5.title": "Personal Injury Law",
-                "services.5.desc": "Representation for victims of accidents, negligence, or workplace injuries seeking compensation.",
-                "services.6.title": "Real Estate Law",
-                "services.6.desc": "Assistance with property transactions, disputes, leases, zoning, and title issues.",
-                "services.7.title": "Employment Law",
-                "services.7.desc": "Protecting employee and employer rights in cases of discrimination, contracts, and workplace disputes.",
-                "services.8.title": "Immigration Law",
-                "services.8.desc": "Guidance on visas, green cards, citizenship, deportation defense, and immigration appeals.",
-                "services.9.title": "Intellectual Property Law",
-                "services.9.desc": "Securing and enforcing copyrights, trademarks, patents, and trade secrets for your creations.",
-                "services.link": "Learn More →",
-                "about.title": "Why Choose NYAYSETU?",
-                "about.desc1": "With over 15 years of experience, our team of dedicated legal professionals is committed to providing personalized and effective legal solutions.",
-                "about.desc2": "We believe in making quality legal assistance accessible to everyone, ensuring that justice is never out of reach.",
-                "about.feature1": "Experienced Lawyers",
-                "about.feature2": "Personalized Approach",
-                "about.feature3": "Affordable Services",
-                "about.feature4": "24/7 Support",
-                "about.visual": "Legal Excellence",
-                "testimonials.title": "Client Testimonials",
-                "testimonials.subtitle": "What our clients say about our legal services.",
-                "testimonials.1.text": "\"NYAYSETU provided exceptional legal representation for my property dispute case. Their expertise and dedication led to a successful outcome.\"",
-                "testimonials.1.name": "Rajesh Kumar",
-                "testimonials.1.title": "Business Owner",
-                "testimonials.2.text": "\"I'm grateful for the compassionate support during my divorce proceedings. The team was professional and understanding throughout the process.\"",
-                "testimonials.2.name": "Priya Sharma",
-                "testimonials.2.title": "Teacher",
-                "testimonials.3.text": "\"The corporate legal services provided to our startup were invaluable. They helped us navigate complex regulations with ease.\"",
-                "testimonials.3.name": "Amit Patel",
-                "testimonials.3.title": "Startup Founder",
-                "contact.title": "Get In Touch",
-                "contact.subtitle": "Reach out to us for a consultation or any inquiries.",
-                "contact.info.title": "Contact Information",
-                "contact.address.title": "Address",
-                "contact.address.value": "Sant Tukaram Nagar, Pimpri, Pune, Maharashtra, India",
-                "contact.phone.title": "Phone",
-                "contact.email.title": "Email",
-                "contact.form.name": "Your Name",
-                "contact.form.email": "Email Address",
-                "contact.form.subject": "Subject",
-                "contact.form.message": "Your Message",
-                "contact.form.submit": "Send Message",
-                "footer.desc": "Providing expert legal assistance and connecting clients with experienced lawyers to protect their rights and ensure justice.",
-                "footer.links2.title": "Services",
-                "footer.contact.title": "Contact",
-                "footer.more": "More Services",
-                "footer.rights": "All rights reserved."
-            },
-            hi: {
-                "nav.home": "होम",
-                "nav.about": "हमारे बारे में",
-                "nav.services": "सेवाएं",
-                "nav.contact": "संपर्क करें",
-                "hero.title": "आपके अधिकारों के लिए विशेषज्ञ कानूनी सहायता",
-                "hero.subtitle": "आपके अधिकारों की रक्षा और व्यापक कानूनी सहायता के माध्यम से न्याय प्रदान करने के लिए अनुभवी वकीलों से जुड़ें।",
-                "hero.cta.consult": "निःशुल्क परामर्श",
-                "services.title": "हमारी कानूनी सेवाएं",
-                "services.subtitle": "आपकी विशिष्ट आवश्यकताओं और परिस्थितियों के अनुरूप व्यापक कानूनी समाधान।",
-                "services.1.title": "सिविल कानून",
-                "services.1.desc": "अनुबंध मतभेद, संपत्ति विवाद और व्यक्तिगत चोट के दावों सहित नागरिक विवादों में पेशेवर प्रतिनिधित्व।",
-                "services.2.title": "पारिवारिक कानून",
-                "services.2.desc": "तलाक, बच्चे की हिरासत, गुजारा भत्ता और अन्य पारिवारिक संबंधी कानूनी मामलों में दयालु सहायता।",
-                "services.3.title": "कॉर्पोरेट कानून",
-                "services.3.desc": "गठन, अनुबंध, अनुपालन और बौद्धिक संपदा संरक्षण सहित व्यवसायों के लिए कानूनी मार्गदर्शन।",
-                "services.4.title": "आपराधिक कानून",
-                "services.4.desc": "डीयूआई, चोरी, हमला और अधिक सहित आपराधिक आरोपों के खिलाफ बचाव, आपके कानूनी अधिकारों की रक्षा।",
-                "services.5.title": "व्यक्तिगत चोट कानून",
-                "services.5.desc": "दुर्घटना, लापरवाही या कार्यक्षेत्र की चोटों के पीड़ितों के लिए मुआवजे की मांग करने वाला प्रतिनिधित्व।",
-                "services.6.title": "रियल एस्टेट कानून",
-                "services.6.desc": "संपत्ति लेनदेन, विवाद, लीज, जोनिंग और शीर्षक मुद्दों के साथ सहायता।",
-                "services.7.title": "रोजगार कानून",
-                "services.7.desc": "भेदभाव, अनुबंध और कार्यक्षेत्र विवादों के मामलों में कर्मचारी और नियोक्ता अधिकारों की सुरक्षा।",
-                "services.8.title": "आव्रजन कानून",
-                "services.8.desc": "वीजा, ग्रीन कार्ड, नागरिकता, निर्वासन रक्षा और आव्रजन अपील पर मार्गदर्शन।",
-                "services.9.title": "बौद्धिक संपदा कानून",
-                "services.9.desc": "आपकी रचनाओं के लिए कॉपीराइट, ट्रेडमार्क, पेटेंट और व्यापार रहस्य सुरक्षित करना और लागू करना।",
-                "services.link": "अधिक जानें →",
-                "about.title": "NYAYSETU क्यों चुनें?",
-                "about.desc1": "15 वर्षों से अधिक के अनुभव के साथ, हमारी समर्पित कानूनी पेशेवरों की टीम व्यक्तिगत और प्रभावी कानूनी समाधान प्रदान करने के लिए प्रतिबद्ध है।",
-                "about.desc2": "हम मानते हैं कि गुणवत्तापूर्ण कानूनी सहायता सभी के लिए सुलभ बनाना, यह सुनिश्चित करते हुए कि न्याय कभी दूर नहीं है।",
-                "about.feature1": "अनुभवी वकील",
-                "about.feature2": "व्यक्तिगत दृष्टिकोण",
-                "about.feature3": "सस्ती सेवाएं",
-                "about.feature4": "24/7 समर्थन",
-                "about.visual": "कानूनी उत्कृष्टता",
-                "contact.title": "संपर्क करें",
-                "contact.subtitle": "परामर्श या किसी भी जानकारी के लिए हमसे संपर्क करें।",
-                "contact.info.title": "संपर्क जानकारी",
-                "contact.address.title": "पता",
-                "contact.address.value": "संत तुकाराम नगर, पिंपरी, पुणे, महाराष्ट्र, भारत",
-                "contact.phone.title": "फोन",
-                "contact.email.title": "ईमेल",
-                "contact.form.name": "आपका नाम",
-                "contact.form.email": "ईमेल पता",
-                "contact.form.subject": "विषय",
-                "contact.form.message": "आपका संदेश",
-                "contact.form.submit": "संदेश भेजें",
-                "footer.desc": "विशेषज्ञ कानूनी सहायता प्रदान करना और ग्राहकों को उनके अधिकारों की रक्षा और न्याय सुनिश्चित करने के लिए अनुभवी वकीलों से जोड़ना।",
-                "footer.links2.title": "सेवाएं",
-                "footer.contact.title": "संपर्क",
-                "footer.more": "अधिक सेवाएं",
-                "footer.rights": "सर्वाधिकार सुरक्षित।"
-            },
-            mr: {
-                "nav.home": "मुख्यपृष्ठ",
-                "nav.about": "आमच्याविषयी",
-                "nav.services": "सेवा",
-                "nav.contact": "संपर्क",
-                "hero.title": "तुमच्या हक्कांसाठी तज्ञ कायदेशीर मदत",
-                "hero.subtitle": "तुमच्या हक्कांचे संरक्षण करण्यासाठी आणि व्यापक कायदेशीर समर्थनाद्वारे न्याय प्रदान करण्यासाठी अनुभवी वकीलांशी तुम्हाला जोडणे।",
-                "hero.cta.consult": "विनामूल्य सल्ला",
-                "services.title": "आमच्या कायदेशीर सेवा",
-                "services.subtitle": "तुमच्या विशिष्ट गरजा आणि परिस्थितीनुसार सानुकूलित व्यापक कायदेशीर उपाय।",
-                "services.1.title": "नागरी कायदा",
-                "services.1.desc": "कॉन्ट्रॅक्ट मतभेद, मालमत्ता विवाद आणि वैयक्तिक दुखापत दाव्यांसह नागरी विवादांमध्ये व्यावसायिक प्रतिनिधित्व।",
-                "services.2.title": "कौटुंबिक कायदा",
-                "services.2.desc": "घटस्फोट, मुलाला ताब्यात घेणे, निर्वाह खर्च आणि इतर कौटुंबिक संबंधित कायदेशीर बाबींमध्ये करुणेची मदत।",
-                "services.3.title": "कॉर्पोरेट कायदा",
-                "services.3.desc": "व्यवसायांसाठी कायदेशीर मार्गदर्शन, यासह गठण, करार, अनुपालन आणि बौद्धिक मालमत्ता संरक्षण।",
-                "services.4.title": "गुन्हेगारी कायदा",
-                "services.4.desc": "डीयूआय, चोरी, हल्ला आणि अधिक यासह गुन्हेगारी आरोपांविरुद्ध बचाव, तुमच्या कायदेशीर हक्कांचे संरक्षण।",
-                "services.5.title": "वैयक्तिक दुखापत कायदा",
-                "services.5.desc": "अपघात, निष्काळजीपणा किंवा कार्यक्षेत्रातील दुखापतींच्या पीडितांसाठी भरपाई मागणारे प्रतिनिधित्व।",
-                "services.6.title": "रिअल इस्टेट कायदा",
-                "services.6.desc": "मालमत्ता व्यवहार, विवाद, लीज, झोनिंग आणि शीर्षक समस्यांसह सहाय्य।",
-                "services.7.title": "रोजगार कायदा",
-                "services.7.desc": "भेदभाव, करार आणि कार्यक्षेत्र विवादांच्या प्रकरणांमध्ये कर्मचारी आणि नियोक्ता हक्कांचे संरक्षण।",
-                "services.8.title": "इमिग्रेशन कायदा",
-                "services.8.desc": "व्हिसा, ग्रीन कार्ड, नागरिकत्व, निर्वासन संरक्षण आणि इमिग्रेशन अपीलवर मार्गदर्शन।",
-                "services.9.title": "बौद्धिक मालमत्ता कायदा",
-                "services.9.desc": "तुमच्या निर्मितींसाठी कॉपीराइट, ट्रेडमार्क, पेटंट आणि व्यापार रहस्य सुरक्षित करणे आणि अंमलबजावणी करणे।",
-                "services.link": "अधिक जाणून घ्या →",
-                "about.title": "NYAYSETU का निवडा?",
-                "about.desc1": "15 वर्षांपेक्षा जास्त अनुभवासह, आमची समर्पित कायदेशीर व्यावसायिकांची टीम वैयक्तिकृत आणि प्रभावी कायदेशीर उपाय प्रदान करण्यासाठी वचनबद्ध आहे।",
-                "about.desc2": "आम्हाला विश्वास आहे की दर्जेदार कायदेशीर मदत प्रत्येकासाठी सुलभ करणे, हे सुनिश्चित करते की न्याय कधीच दूर नाही।",
-                "about.feature1": "अनुभवी वकील",
-                "about.feature2": "वैयक्तिकृत दृष्टीकोन",
-                "about.feature3": "स्वस्त सेवा",
-                "about.feature4": "24/7 आधार",
-                "about.visual": "कायदेशीर उत्कृष्टता",
-                "contact.title": "संपर्क साधा",
-                "contact.subtitle": "सल्ला किंवा कोणत्याही चौकशीसाठी आमच्याशी संपर्क साधा।",
-                "contact.info.title": "संपर्क माहिती",
-                "contact.address.title": "पत्ता",
-                "contact.address.value": "संत तुकाराम नगर, पिंपरी, पुणे, महाराष्ट्र, भारत",
-                "contact.phone.title": "फोन",
-                "contact.email.title": "ईमेल",
-                "contact.form.name": "तुमचे नाव",
-                "contact.form.email": "ईमेल पत्ता",
-                "contact.form.subject": "विषय",
-                "contact.form.message": "तुमचा संदेश",
-                "contact.form.submit": "संदेश पाठवा",
-                "footer.desc": "तज्ञ कायदेशीर सहाय्य प्रदान करणे आणि ग्राहकांना त्यांच्या हक्कांचे संरक्षण करण्यासाठी आणि न्याय सुनिश्चित करण्यासाठी अनुभवी वकीलांशी जोडणे।",
-                "footer.links2.title": "सेवा",
-                "footer.contact.title": "संपर्क",
-                "footer.more": "अधिक सेवा",
-                "footer.rights": "सर्व हक्क राखीव."
-            }
-        };
-
-        let currentLang = 'en';
-
-        // Loading screen
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('loadingOverlay').classList.add('fade-out');
-                setTimeout(() => {
-                    document.getElementById('loadingOverlay').style.display = 'none';
-                }, 500);
-                
-                initializeAnimations();
-            }, 1500);
-        });
-
-        // Initialize fade-in animations
-        function initializeAnimations() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-        }
-
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileOverlay = document.getElementById('mobileOverlay');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-
-        function openMobileMenu() {
-            mobileMenu.classList.add('open');
-            mobileOverlay.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('open');
-            mobileOverlay.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        mobileMenuBtn.addEventListener('click', openMobileMenu);
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        mobileOverlay.addEventListener('click', closeMobileMenu);
-
-        // Mobile menu links smooth scroll
-        document.querySelectorAll('.mobile-nav-menu a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) {
-                    closeMobileMenu();
-                    setTimeout(() => {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-                }
-            });
-        });
-
-        // Desktop navigation smooth scroll
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const href = link.getAttribute('href');
-                if (href.startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            });
-        });
-
-        // Back to top button
-        const backToTopBtn = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-
-            // Header scroll effect
-            const header = document.getElementById('header');
-            if (window.pageYOffset > 50) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Language switcher
-        function changeLanguage(lang) {
-            currentLang = lang;
-            
-            document.querySelectorAll('[data-key]').forEach(element => {
-                const key = element.getAttribute('data-key');
-                if (translations[lang] && translations[lang][key]) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[lang][key];
-                    } else {
-                        element.textContent = translations[lang][key];
-                    }
-                }
-            });
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                if (btn.getAttribute('data-lang') === lang) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            
-            document.documentElement.lang = lang;
-        }
-
-        document.querySelectorAll('.lang-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const lang = this.getAttribute('data-lang');
-                changeLanguage(lang);
-            });
-        });
-
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
+            const password = document.getElementById('password').value;
+            const termsChecked = document.getElementById('terms').checked;
             
-            if (!name || !email || !subject || !message) {
-                alert(currentLang === 'hi' ? 'कृपया सभी फ़ील्ड भरें।' : 
-                     currentLang === 'mr' ? 'कृपया सर्व फील्ड भरा।' : 
-                     'Please fill in all fields.');
+            if (!termsChecked) {
+                alert('Please accept the Terms and Conditions to continue.');
                 return;
             }
             
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert(currentLang === 'hi' ? 'कृपया एक वैध ईमेल पता दर्ज करें।' : 
-                     currentLang === 'mr' ? 'कृपया वैध ईमेल पत्ता प्रविष्ट करा।' : 
-                     'Please enter a valid email address.');
-                return;
-            }
+            // In a real application, you would validate credentials here
+            console.log('Login attempt with:', { email, password });
             
-            alert(currentLang === 'hi' ? 'आपके संदेश के लिए धन्यवाद! हम जल्द ही आपसे संपर्क करेंगे।' : 
-                 currentLang === 'mr' ? 'तुमच्या संदेशाबद्दल धन्यवाद! आम्ही लवकरच तुमच्याशी संपर्क साधू।' : 
-                 'Thank you for your message! We will get back to you soon.');
-            
-            this.reset();
-        });
-
-        // Initialize fade-in elements on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                document.querySelectorAll('.fade-in').forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('visible');
-                    }, index * 100);
-                });
-            }, 500);
+            // Redirect to index.html after successful login
+            window.location.href = 'index.html';
         });
     </script>
-    <script>
-    // Current language variable
-    let currentLanguage = 'en'; // default to English
-
-    // Function to handle service navigation
-    function navigateToService(serviceName) {
-        const languageSuffixes = {
-            'en': '',
-            'hi': '-hindi',
-            'mr': '-marathi'
-        };
-        
-        const suffix = languageSuffixes[currentLanguage];
-        const fileName = `${serviceName}${suffix}.html`;
-        window.location.href = fileName;
-    }
-
-    // Language switcher event listener
-    document.querySelectorAll('.lang-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            currentLanguage = this.getAttribute('data-lang');
-        });
-    });
-
-    // Update your service links to use the navigation function
-    document.querySelectorAll('.service-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const serviceName = this.getAttribute('data-service');
-            navigateToService(serviceName);
-        });
-    });
-</script>
 </body>
 </html>
